@@ -37,8 +37,8 @@ class SMTPClient:
     ) -> None:
         client = SMTP(self._server, self._port)
         client.starttls()
-        if not is_null_or_empty(self._password):
-            client.login(str(self._username), str(self._password))
+        if (self._password is not None): # Only login if password is supplied
+            client.login(self._username, self._password)
         client.sendmail(sender, receivers, message.as_string())
         client.quit()
 
